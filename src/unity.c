@@ -2535,8 +2535,12 @@ void UnityBegin(const char* filename)
     Unity.TestIgnores = 0;
     Unity.CurrentTestFailed = 0;
     Unity.CurrentTestIgnored = 0;
-
+#ifdef UNITY_DETAIL_STACK_SIZE
+    Unity.CurrentDetailStackSize = 0;
+#else
     UNITY_CLR_DETAILS();
+#endif
+
     UNITY_OUTPUT_START();
 }
 
