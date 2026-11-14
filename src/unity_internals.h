@@ -75,8 +75,10 @@
         /* https://en.cppreference.com/w/c/language/_Noreturn */
         #define UNITY_NORETURN _Noreturn
       #else /* Using newer Windows SDK or not MSVC compiler */
-        #if defined(__GNUC__)
+        #if defined(__GNUC__) || (defined(__clang__) && defined(_MSC_VER))
           /* The header <stdnoreturn.h> collides with __attribute(noreturn)__ from GCC. */
+          /* Clang-cl doesn't define __GNUC__ like regular clang, but still supports _Noreturn */
+          /*  <stdnoreturn.h> would break __declspec(noreturn) in the Windows sdk headers.*/
           #define UNITY_NORETURN _Noreturn
         #else
           #include <stdnoreturn.h>
